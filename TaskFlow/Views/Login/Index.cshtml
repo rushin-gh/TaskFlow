@@ -1,0 +1,40 @@
+﻿@model TaskFlow.Models.User
+@{
+    Layout = null;
+}
+
+
+<style>
+    .container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .display-block {
+        display: block
+    }
+
+    .border-5-solid-red {
+        border: 5px solid red;
+    }
+</style>
+
+@Styles.Render("~/Content/css")
+@using (Html.BeginForm("Index", "Login", FormMethod.Post))
+{
+    <div class="container">
+        <div class="border-5-solid-red p-3">
+            <div>
+                @Html.TextBoxFor(user => user.UserName, new { @placeholder = "Enter username", @type = "text" })
+            </div>
+            <br />
+            <div>
+                @Html.TextBoxFor(user => user.UserPassword, new { @placeholder = "Enter password", @type = "password" })
+            </div>
+        </div>
+    </div>
+}
+
