@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TaskFlow.Models;
 
 namespace TaskFlow.Controllers
 {
@@ -11,6 +12,7 @@ namespace TaskFlow.Controllers
         // GET: Task
         public ActionResult Index()
         {
+            var user = TempData["User"] as User;
             return View();
         }
     }
