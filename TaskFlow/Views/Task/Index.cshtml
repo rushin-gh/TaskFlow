@@ -1,3 +1,25 @@
-﻿<div>
-    <h3>Task List</h3>  
+﻿@model TaskFlow.Models.User
+<div class="width-100">
+    <h3 class="text-center">Task List</h3>
+
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th width="5%" style="text-align: center" scope="col">#</th>
+                <th scope="col">Task Desc</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var taskNo = 1;
+            }
+            @foreach (var task in Model.TaskList)
+            {
+                <tr>
+                    <td style="text-align: center" scope="row">@(taskNo++)</td>
+                    <td>@task.TaskDesc</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

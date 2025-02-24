@@ -27,6 +27,7 @@ namespace TaskFlow.Controllers
                 int userId = Database.GetUserId(user);
                 if (userId > 0)
                 {
+                    user.UserId = userId;
                     TempData["User"] = user;
                     return RedirectToAction("Index", "Task");
                 }

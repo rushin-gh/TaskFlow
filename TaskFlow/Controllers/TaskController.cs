@@ -13,7 +13,28 @@ namespace TaskFlow.Controllers
         public ActionResult Index()
         {
             var user = TempData["User"] as User;
-            return View();
+            //if (user == null)
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
+
+            if (user == null) user = new User();
+            user.TaskList = new List<Task>()
+            {
+                new Task()
+                {
+                    TaskDesc = "Go To Sleep"
+                },
+                new Task()
+                {
+                    TaskDesc = "Read a Book"
+                },
+                new Task()
+                {
+                    TaskDesc = "Recharge Mobile"
+                }
+            };
+            return View(user);
         }
     }
 }
