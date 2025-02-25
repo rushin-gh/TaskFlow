@@ -44,5 +44,44 @@ namespace TaskFlow.Business_Layer
             }
             return userId;
         }
+
+        public static void GetUserTasks(User user)
+        {
+            string dbConnectionString = ConfigurationManager.ConnectionStrings["DB_ConnectionString"].ConnectionString;
+            using (SqlConnection DbConnection = new SqlConnection(dbConnectionString))
+            {
+                try
+                {
+                    DbConnection.Open();
+
+                    using (SqlCommand cmd = new SqlCommand("sp_GetUserTasks", DbConnection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@UserId", user.UserId);
+
+                        using (SqlDataReader sqlDataReader = cmd.ExecuteReader())
+                        {
+                            while (sqlDataReader.Read())
+                            {
+                                user.TaskList.Add(
+                                    new Task()
+                                    {
+                                        TaskId = sqlDataReader.GetInt32(0),
+                                        TaskDesc = sqlDataReader.GetString(1)
+                                    }
+                                );
+                            }
+                        }
+                    }
+                }
+                catch { }
+                finally
+                {
+                    DbConnection.Close();
+                }
+            }
+            // return userId;
+        }
     }
 }
