@@ -1,15 +1,21 @@
-﻿using System;
+﻿using System.Web.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using TaskFlow.Business_Layer;
-using TaskFlow.Models;
+using Model;
+using Contract;
+using Business_Layer;
 
 namespace TaskFlow.Controllers
 {
     public class TaskController : Controller
     {
+        public IDatabase dbObject;
+
+        public TaskController()
+        {
+            dbObject = new Database();
+        }
+
+
         // GET: Task
         public ActionResult Index()
         {
@@ -45,7 +51,7 @@ namespace TaskFlow.Controllers
 
         private void GetUserTasksFromDB(User user)
         {
-            Database.GetUserTasks(user);
+            dbObject.GetUserTasks(user);
         }
     }
 }

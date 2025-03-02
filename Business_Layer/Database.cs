@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Data;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Data;
-using System.Linq;
-using System.Web;
-using TaskFlow.Models;
+using Model;
 
-namespace TaskFlow.Business_Layer
+namespace Business_Layer
 {
-    public class Database
+    public class Database : Contract.IDatabase
     {
-        public static int GetUserId(User user)
+        public int GetUserId(User user)
         {
             int userId = 0;
-            string dbConnectionString = ConfigurationManager.ConnectionStrings["DB_ConnectionString"].ConnectionString;
+            string dbConnectionString = Config.Database.ConnectionString;
+
             using (SqlConnection DbConnection = new SqlConnection(dbConnectionString))
             {
                 try
@@ -45,7 +42,7 @@ namespace TaskFlow.Business_Layer
             return userId;
         }
 
-        public static void GetUserTasks(User user)
+        public void GetUserTasks(User user)
         {
             string dbConnectionString = ConfigurationManager.ConnectionStrings["DB_ConnectionString"].ConnectionString;
             using (SqlConnection DbConnection = new SqlConnection(dbConnectionString))

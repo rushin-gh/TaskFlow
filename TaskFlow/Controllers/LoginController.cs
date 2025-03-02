@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using TaskFlow.Models;
-using TaskFlow.Business_Layer;
+﻿using System.Web.Mvc;
+using Business_Layer;
+using Contract;
+using Model;
 
 namespace TaskFlow.Controllers
 {
     public class LoginController : Controller
     {
+        public IDatabase dbObject;
+        public LoginController()
+        {
+            dbObject = new Database();
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -24,7 +24,7 @@ namespace TaskFlow.Controllers
         {
             if (ModelState.IsValid)
             {
-                int userId = Database.GetUserId(user);
+                int userId = dbObject.GetUserId(user);
                 if (userId > 0)
                 {
                     user.UserId = userId;
