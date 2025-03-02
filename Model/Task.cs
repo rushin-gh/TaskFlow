@@ -13,6 +13,5 @@ namespace Model
         public DateTime CreatedOn { get; set; }
 
         public int UserId { get; set; }
-
     }
 }

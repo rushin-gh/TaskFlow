@@ -29,6 +29,7 @@ namespace TaskFlow.Controllers
             //    return RedirectToAction("Index", "Login");
             //}
 
+            // Move following method to Business_Layer
             GetUserTasksFromDB(user);
 
             //user.TaskList = new List<Task>()
@@ -49,6 +50,7 @@ namespace TaskFlow.Controllers
             return View(user);
         }
 
+        // Move following method to Business_Layer
         private void GetUserTasksFromDB(User user)
         {
             dbObject.GetUserTasks(user);

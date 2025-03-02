@@ -22,6 +22,7 @@ namespace TaskFlow.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
+            // Move code of getting user to Business Layer
             if (ModelState.IsValid)
             {
                 int userId = dbObject.GetUserId(user);

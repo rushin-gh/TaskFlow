@@ -12,6 +12,7 @@ namespace Business_Layer
             int userId = 0;
             string dbConnectionString = Config.Database.ConnectionString;
 
+            /* Move following snippet to Database Layer */
             using (SqlConnection DbConnection = new SqlConnection(dbConnectionString))
             {
                 try
@@ -44,6 +45,11 @@ namespace Business_Layer
 
         public void GetUserTasks(User user)
         {
+            /* 
+             * Get value from Config
+             * Move rest snippet to Database Layer
+             */
+
             string dbConnectionString = ConfigurationManager.ConnectionStrings["DB_ConnectionString"].ConnectionString;
             using (SqlConnection DbConnection = new SqlConnection(dbConnectionString))
             {
