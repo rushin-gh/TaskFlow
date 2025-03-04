@@ -1,24 +1,23 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Configuration;
 using System.Data.SqlClient;
 using Model;
 
 namespace Business_Layer
 {
-    public class Database : Contract.IDatabase
+    public static class Database
     {
-        public int GetUserId(User user)
+        public static string DBConnectionString = Config.Database.ConnectionString;
+
+        public static int GetUserId(User user)
         {
             int userId = 0;
-            string dbConnectionString = Config.Database.ConnectionString;
-
-            /* Move following snippet to Database Layer */
-            using (SqlConnection DbConnection = new SqlConnection(dbConnectionString))
+            using (SqlConnection DbConnection = new SqlConnection(DBConnectionString))
             {
                 try
                 {
                     DbConnection.Open();
-
                     using (SqlCommand cmd = new SqlCommand("sp_Login", DbConnection))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -27,14 +26,16 @@ namespace Business_Layer
                         cmd.Parameters.AddWithValue("@UserPassword", user.UserPassword);
 
                         var result = cmd.ExecuteScalar();
-
                         if (result != null)
                         {
-                            userId = (int)result;
+                            userId = Convert.ToInt32(result);
                         }
                     }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    // To Do : Log exception here
+                }
                 finally
                 {
                     DbConnection.Close();
@@ -43,15 +44,9 @@ namespace Business_Layer
             return userId;
         }
 
-        public void GetUserTasks(User user)
+        public static void GetUserTasks(User user)
         {
-            /* 
-             * Get value from Config
-             * Move rest snippet to Database Layer
-             */
-
-            string dbConnectionString = ConfigurationManager.ConnectionStrings["DB_ConnectionString"].ConnectionString;
-            using (SqlConnection DbConnection = new SqlConnection(dbConnectionString))
+            using (SqlConnection DbConnection = new SqlConnection(DBConnectionString))
             {
                 try
                 {
@@ -78,13 +73,15 @@ namespace Business_Layer
                         }
                     }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    // To Do : Log exception here
+                }
                 finally
                 {
                     DbConnection.Close();
                 }
             }
-            // return userId;
         }
     }
 }

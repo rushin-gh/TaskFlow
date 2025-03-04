@@ -7,12 +7,6 @@ namespace TaskFlow.Controllers
 {
     public class LoginController : Controller
     {
-        public IDatabase dbObject;
-        public LoginController()
-        {
-            dbObject = new Database();
-        }
-
         [HttpGet]
         public ActionResult Index()
         {
@@ -25,16 +19,22 @@ namespace TaskFlow.Controllers
             // Move code of getting user to Business Layer
             if (ModelState.IsValid)
             {
-                int userId = dbObject.GetUserId(user);
+                int userId = Database.GetUserId(user);
                 if (userId > 0)
                 {
                     user.UserId = userId;
-                    TempData["User"] = user;
+                    Session["User"] = user;
                     return RedirectToAction("Index", "Task");
                 }
             }
             ModelState.Clear();
             return View("Index");
+        }
+
+        public ActionResult LogOut()
+        {
+            Session["User"] = null;
+            return RedirectToAction("Index");
         }
     }
 }

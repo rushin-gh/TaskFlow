@@ -3,57 +3,19 @@ using System.Collections.Generic;
 using Model;
 using Contract;
 using Business_Layer;
+using Newtonsoft.Json;
 
 namespace TaskFlow.Controllers
 {
     public class TaskController : Controller
     {
-        public IDatabase dbObject;
-
-        public TaskController()
-        {
-            dbObject = new Database();
-        }
-
-
         // GET: Task
         public ActionResult Index()
         {
-            var user = new User()
-            {
-                UserId = 1,
-                TaskList = new List<Task>()
-            };
-            //if (user == null)
-            //{
-            //    return RedirectToAction("Index", "Login");
-            //}
-
-            // Move following method to Business_Layer
-            GetUserTasksFromDB(user);
-
-            //user.TaskList = new List<Task>()
-            //{
-            //    new Task()
-            //    {
-            //        TaskDesc = "Go To Sleep"
-            //    },
-            //    new Task()
-            //    {
-            //        TaskDesc = "Read a Book"
-            //    },
-            //    new Task()
-            //    {
-            //        TaskDesc = "Recharge Mobile"
-            //    }
-            //};
-            return View(user);
-        }
-
-        // Move following method to Business_Layer
-        private void GetUserTasksFromDB(User user)
-        {
-            dbObject.GetUserTasks(user);
+            var orgUser = Session["User"] as User;
+            var copyUser = JsonConvert.DeserializeObject<User>(JsonConvert.SerializeObject(orgUser)); 
+            Database.GetUserTasks(copyUser);
+            return View(copyUser);
         }
     }
 }

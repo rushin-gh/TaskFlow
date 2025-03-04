@@ -14,5 +14,10 @@ namespace Model
         public string UserPassword { get; set; }
 
         public List<Task> TaskList { get; set; }
+
+        public User()
+        {
+            TaskList = new List<Task>();
+        }
     }
 }
