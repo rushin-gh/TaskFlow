@@ -26,6 +26,14 @@
     </table>
 
     <div class="d-flex justify-content-end">
-        <button class="btn btn-danger">Add Task</button>
+        <button id="addTask" class="btn" style="background-color: cyan; border-color: black">Add Task</button>
     </div>
 </div>
+
+<script>
+    let taskAddElement = document.getElementById('addTask');
+    taskAddElement.addEventListener('click', function () {
+        let task = prompt("Enter task to add in Task List");
+        fetch('/Task/AddTask?task=Nothing');
+    });
+</script>

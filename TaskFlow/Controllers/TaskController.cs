@@ -17,5 +17,11 @@ namespace TaskFlow.Controllers
             Database.GetUserTasks(copyUser);
             return View(copyUser);
         }
+
+        public ActionResult AddTask(string task)
+        {
+
+            return RedirectToAction("Index");
+        }
     }
 }
